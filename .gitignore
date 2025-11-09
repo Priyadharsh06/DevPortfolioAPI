@@ -1,0 +1,8 @@
+bin/
+obj/
+*.db
+*.sqlite
+.vs/
+appsettings.*.json
+bin-debug/
+.DS_Store
