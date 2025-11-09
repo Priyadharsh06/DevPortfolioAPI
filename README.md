@@ -76,7 +76,7 @@ https://localhost:<port>/swagger
 
 ## 🔐 Using Swagger with JWT Authentication
 
-1. Register or Log In
+## 1. Register or Log In
 
 Use the following endpoints:
 
@@ -86,7 +86,7 @@ Use the following endpoints:
 | POST   | `/api/auth/login`    | Authenticate and receive JWT token |
 
 
-2. Copy the Returned Token
+## 2. Copy the Returned Token
 
 Example login response:
 
@@ -96,7 +96,7 @@ Example login response:
 }
 Copy the value of "token".
 
-3. Authorize in Swagger
+## 3. Authorize in Swagger
 
 Open Swagger UI
 
