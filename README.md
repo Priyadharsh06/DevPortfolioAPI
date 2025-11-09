@@ -1,96 +1,119 @@
-DevPortfolio API
+# DevPortfolio API
 
-This project is a RESTful Portfolio Management API built with ASP.NET Core, SQL Server, and JWT-Based Authentication.
-It allows users to register, log in, and manage portfolio projects. Role-based access control ensures only administrators can perform secure management operations.
+A clean and secure **RESTful Portfolio Management API** built using **ASP.NET Core**, **SQL Server**, **JWT Authentication**, and **Role-Based Authorization**.  
+The application allows users to register, log in, and manage portfolio projects, with admin-only access for project management operations.
 
-Key Features
+---
 
-User Authentication
+## ✨ Key Features
 
-Register and log in with secure password hashing
+### 1. User Authentication
+- Secure password hashing using **BCrypt**
+- Login returns a **JWT token** for authenticated requests
 
-Generates JWT tokens for authenticated access
+### 2. Role-Based Authorization
+- Roles: **User** and **Admin**
+- **Admin** can create, update, and delete projects
+- **User** can view projects
 
-Role-Based Authorization
+### 3. Portfolio Project Management
+- Create, update, delete, and view portfolio entries
+- Fully RESTful endpoint design
 
-Standard User and Admin roles
+### 4. SQL Server Integration
+- **Entity Framework Core** used for Migrations and Data Access
+- Automatic **Admin account seeding** on first run
 
-Admins have permissions to create, update, and delete projects
+### 5. Built-in Swagger UI
+- Interactive API testing environment
+- Supports JWT token authorization inside Swagger
 
-Portfolio Project Management
+---
 
-Add, edit, fetch, and delete portfolio items
+## 🛠️ Technology Stack
 
-Clean, REST-style endpoints following best practices
+| Layer | Technology |
+|------|------------|
+| Backend | ASP.NET Core Web API (.NET 7) |
+| Database | SQL Server / LocalDB |
+| ORM | Entity Framework Core |
+| Authentication | JWT + BCrypt |
+| CI Pipeline | GitHub Actions |
 
-SQL Server Database Integration
+---
 
-Entity Framework Core for migrations and data access
+## 🚀 Getting Started
 
-Automatic admin account seeding on first run
+### Prerequisites
+Ensure the following are installed:
+- .NET 7 SDK
+- SQL Server (LocalDB or Full)
+- Visual Studio / VS Code
 
-API Documentation Using Swagger
+---
 
-Built-in Swagger UI for testing endpoints
+### Configuration
 
-Supports JWT token authentication inside Swagger
+In `appsettings.json`, verify database connection and optionally update seed admin credentials:
 
-Technology Stack
-Component	Technology
-Backend Framework	ASP.NET Core Web API (.NET 7)
-Authentication	JWT + BCrypt password hashing
-Database	SQL Server (LocalDB or full instance)
-ORM	Entity Framework Core
-DevOps	GitHub Actions CI
-Getting Started
-Prerequisites
-
-.NET 7 SDK
-
-SQL Server or LocalDB
-
-Visual Studio / VS Code
-
-Setup Instructions
-
-Update the database connection in appsettings.json if required.
-
-Run migrations:
-
-dotnet ef database update
-
-
-Start the API:
-
-dotnet run
-
-Seeding Admin User
-
-The admin account is created automatically based on the values in appsettings.json:
-
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=DevPortfolioDb;Trusted_Connection=True;"
+},
 "Seed": {
   "AdminEmail": "admin@example.com",
   "AdminPassword": "AdminPassword123!"
 }
 
+## 🗄️ Database Setup
 
-You can modify these before the first run.
+Run the Entity Framework migration to create the database schema:
+dotnet ef database update
 
-Using Swagger Authentication
+▶️ Run the API
 
-Start the API and open Swagger.
+Start the application:
+dotnet run
 
-Authenticate using /api/auth/login
+After the API starts, Swagger UI will be available at:
+https://localhost:<port>/swagger
 
-Copy the returned token.
+🔐 Using Swagger with JWT Authentication
 
-Click Authorize in Swagger and paste:
+1. Register or Log in
 
-Bearer <your token>
+Use the following endpoints to create or authenticate a user:
 
-Example Endpoints
-Method	Endpoint	Description	Roles
-POST	/api/auth/register	Register a new user	Public
-POST	/api/auth/login	Log in and receive JWT token	Public
-GET	/api/projects	View projects	User / Admin
-POST	/api/projects	Add new project	Admin only
+
+| Method | Endpoint             | Purpose                            |
+| ------ | -------------------- | ---------------------------------- |
+| POST   | `/api/auth/register` | Register a new user                |
+| POST   | `/api/auth/login`    | Authenticate and receive JWT token |
+
+2. Copy the Token
+
+The login endpoint returns a JSON object like:
+{
+  "token": "your_jwt_token_here",
+  "expiresInMinutes": 60
+}
+Copy the "token" value.
+
+3. Authorize in Swagger
+
+Click the Authorize button in Swagger UI.
+
+Enter your token in this format:
+Bearer your_token_here
+Click Authorize and start making authenticated requests.
+
+## 📌 Example Endpoints
+
+| Method | Endpoint               | Description                       | Role Required |
+|--------|------------------------|-----------------------------------|---------------|
+| POST   | `/api/auth/register`   | Create a new user                 | Public        |
+| POST   | `/api/auth/login`      | Log in and receive JWT            | Public        |
+| GET    | `/api/projects`        | Retrieve all portfolio projects   | User / Admin  |
+| POST   | `/api/projects`        | Create a new project              | Admin only    |
+| PUT    | `/api/projects/{id}`   | Update a project                  | Admin only    |
+| DELETE | `/api/projects/{id}`   | Delete a project                  | Admin only    |
